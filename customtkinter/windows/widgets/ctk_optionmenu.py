@@ -32,6 +32,7 @@ class CTkOptionMenu(CTkBaseClass):
                  dropdown_fg_color: Optional[Union[str, Tuple[str, str]]] = None,
                  dropdown_hover_color: Optional[Union[str, Tuple[str, str]]] = None,
                  dropdown_text_color: Optional[Union[str, Tuple[str, str]]] = None,
+                 dropdown_direction: Optional[str] = None,
 
                  font: Optional[Union[tuple, CTkFont]] = None,
                  dropdown_font: Optional[Union[tuple, CTkFont]] = None,
@@ -63,6 +64,9 @@ class CTkOptionMenu(CTkBaseClass):
         self._font = CTkFont() if font is None else self._check_font_type(font)
         if isinstance(self._font, CTkFont):
             self._font.add_size_configure_callback(self._update_font)
+
+        # dropdown direction?
+        self._dropdown_direction = dropdown_direction
 
         # callback and hover functionality
         self._command = command
@@ -351,8 +355,12 @@ class CTkOptionMenu(CTkBaseClass):
             return super().cget(attribute_name)
 
     def _open_dropdown_menu(self):
+        if self._dropdown_direction == None:
+            value = 0
+        elif self._dropdown_direction == "up":
+            value = -90
         self._dropdown_menu.open(self.winfo_rootx(),
-                                 self.winfo_rooty() + self._apply_widget_scaling(self._current_height + 0))
+                                 self.winfo_rooty() + self._apply_widget_scaling(self._current_height + value))
 
     def _on_enter(self, event=0):
         if self._hover is True and self._state == tkinter.NORMAL and len(self._values) > 0:
