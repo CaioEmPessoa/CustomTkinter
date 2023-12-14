@@ -358,7 +358,7 @@ class CTkOptionMenu(CTkBaseClass):
         if self._dropdown_direction == None:
             value = 0
         elif self._dropdown_direction == "up":
-            value = -90
+            value = -(len(self._values)*40)
         self._dropdown_menu.open(self.winfo_rootx(),
                                  self.winfo_rooty() + self._apply_widget_scaling(self._current_height + value))
 
