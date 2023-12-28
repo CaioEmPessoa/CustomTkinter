@@ -358,9 +358,11 @@ class CTkOptionMenu(CTkBaseClass):
         if self._dropdown_direction == None:
             value = 0
         elif self._dropdown_direction == "up":
-            value = -(len(self._values)*40)
+            itens_amount = len(self._values)
+            value = -((itens_amount*25)+(itens_amount*2)+4)
+
         self._dropdown_menu.open(self.winfo_rootx(),
-                                 self.winfo_rooty() + self._apply_widget_scaling(self._current_height + value))
+                                 self.winfo_rooty() + self._apply_widget_scaling(value))
 
     def _on_enter(self, event=0):
         if self._hover is True and self._state == tkinter.NORMAL and len(self._values) > 0:
